@@ -1,6 +1,4 @@
 "use strict";
-
-const { type } = require("os");
 /* ============================================ */
 /*                LIFE BLOGS API                */
 /* ============================================ */
@@ -17,6 +15,7 @@ const categorySchema = new Schema(
       unique: true,
       required: true,
     },
+
   },
   { collection: "categories", timestamps: true }
 );
