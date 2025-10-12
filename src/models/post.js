@@ -13,13 +13,11 @@ const postSchema = new Schema(
     categoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      unique: true,
       required: true,
     },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      unique: true,
       required: true,
     },
     title: {
