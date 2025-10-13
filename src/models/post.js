@@ -1,5 +1,4 @@
 "use strict";
-const { type } = require("os");
 /* ============================================ */
 /*                LIFE BLOGS API                */
 /* ============================================ */
@@ -37,7 +36,7 @@ const postSchema = new Schema(
     content: {
       type: String,
       trim: true,
-      requried: true,
+      required: true,
     },
     isPublished: {
       type: Boolean,
@@ -47,7 +46,7 @@ const postSchema = new Schema(
       type: Number,
       default: 0,
     },
-    countOfVisibilty: {
+    countOfVisibility: {
       type: Number,
       default: 0,
     },

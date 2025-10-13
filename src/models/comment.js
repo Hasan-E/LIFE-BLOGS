@@ -3,32 +3,39 @@
 /*                LIFE BLOGS API                */
 /* ============================================ */
 
-const {mongoose: {Schema, model}} = require('../configs/dbConnection')
+const {
+  mongoose: { Schema, model },
+} = require("../configs/dbConnection");
 
-const commentSchema = new Schema({
-
+const commentSchema = new Schema(
+  {
     userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     postId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Post',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
     },
     content: {
-        type: String,
-        trim: true,
-        required: true,
+      type: String,
+      trim: true,
+      required: true,
     },
     likeCount: {
-        type: Number,
-        default: 0,
+      type: Number,
+      default: 0,
     },
-    likedBy: {
+    likedBy: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    }
-})
+        ref: "User",
+      },
+    ],
+  },
+  { collection: "comments", timestamps: true }
+);
+
+module.exports = model("Comment", commentSchema);

@@ -17,8 +17,12 @@ const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
 //* ------------------ Middlewares ------------------ */
+// Accept JSON
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 
-
+//* ------------------ Routes ------------------ */
+app.all("/", (req, res) => res.send("Welcome to Life Blogs API"));
 
 //* --------------- ErrorHandler --------------- */
 app.use(require("./src/middlewares/errorHandler"));
