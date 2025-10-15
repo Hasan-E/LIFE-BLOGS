@@ -19,6 +19,9 @@ dbConnection();
 // Accept JSON
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+app.set("query parser","extended")  // for nested query
+// Query Handler
+app.use(require('./src/middlewares/queryHandler'))
 
 //* ------------------ Routes ------------------ */
 app.all("/", (req, res) => res.send("Welcome to Life Blogs API"));

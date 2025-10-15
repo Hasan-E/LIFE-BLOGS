@@ -4,7 +4,7 @@
 /* ============================================ */
 
 const Category = require("../models/category")
-const CustomError = require('../helpers/customError')
+const CustomError = require('../helpers/customError');
 
 module.exports = {
 
@@ -22,7 +22,83 @@ module.exports = {
             </ul>
             `
         */
-       const result = await res.g
+       const result = await res.getModelList(Category)
+
+       res.status(200).send({
+        error: false,
+        details: await res.getModelListDetails(Category),
+        result
+       })
+    },
+
+    create: async (req, res) => {
+        /*
+        #swagger.tags = ["Categories"]
+        #swagger.summary = "Create Category"
+        #swagger.parameters['body'] = {
+            in: 'body',
+            required: true,
+            schema: {$ref: "#/definations/Category"}
+            }
+         */
+
+        const result = await Category.create(req.body)
+
+        res.status(201).send({
+            error: false,
+            result
+        })
+    },
+
+    read: async (req,res) => {
+        /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Get single Category"
+         */
+
+        const result = await Category.findById(req.params.id)
+
+        res.status(200).send({
+            error: false,
+            result
+        })
+    },
+
+    update: async (req, res) => {
+        /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Update Category"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: $ref: "#definations/Category"
+            }
+         */
+
+        const result = await Category.findByIdAndUpdate(req.params.id,req.body,{runValidators: true,new: true})
+
+        if (!result) throw new CustomError("Update failed, data is not found or already updated.",404)
+
+        res.status(202).send({
+            error: false,
+            result
+        })
+    },
+
+    dlt: async (req, res) => {
+        /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary= "Delete Single Category"
+         */
+
+        const result = await Category.findByIdAndDelete(req.params.id)
+
+        if (!result) throw new CustomError("Delete failed, data is not found or already deleted.")
+        
+        res.status(200).send({
+            error: false,
+            result
+        })
     }
 
 }
