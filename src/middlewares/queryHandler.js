@@ -7,8 +7,9 @@ module.exports = async (req, res, next) => {
   //* FILTERING
   const filter = req.query?.filter || {};
   //* SEARCHING
+  const escapeRegex = (str = "")=> str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const search = req.query?.search || {};
-  for (let key in search) search[key] = { $regex: search[key], $options: "i" };
+  for (let key in search) search[key] = { $regex: escapeRegex(search[key]), $options: "i" };
   //* SORTING
   const sort = req.query?.sort || {};
   //* PAGINATION
@@ -17,6 +18,9 @@ module.exports = async (req, res, next) => {
   //* LIMIT
   let limit = parseInt(req.query?.limit);
   limit = limit > 0 ? limit : 20;
+    //Max Limit 
+    const MAX_LIMIT = Number(process.env.MAX_PAGE_SIZE) || 50
+    limit = Math.min(limit, MAX_LIMIT)
   //* SKIP
   let skip = parseInt(req.query?.skip);
   skip = skip > 0 ? skip : (page - 1) * limit;

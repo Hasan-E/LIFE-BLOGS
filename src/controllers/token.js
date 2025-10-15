@@ -40,6 +40,8 @@ module.exports = {
 
     const result = await Token.findById(req.params.id);
 
+    if (!result) throw new CustomError('Token not found')
+
     res.status(200).send({
       error: false,
       result,

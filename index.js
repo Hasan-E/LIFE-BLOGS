@@ -30,4 +30,4 @@ app.all("/", (req, res) => res.send("Welcome to Life Blogs API"));
 app.use(require("./src/middlewares/errorHandler"));
 
 //* ---------------- listen app ---------------- */
-app.listen(PORT, () => console.log("Running at: http://127.0.0.1" + PORT));
+app.listen(PORT, () => console.log("Running at: http://127.0.0.1:" + PORT));

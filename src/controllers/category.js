@@ -3,13 +3,12 @@
 /*                LIFE BLOGS API                */
 /* ============================================ */
 
-const Category = require("../models/category")
-const CustomError = require('../helpers/customError');
+const Category = require("../models/category");
+const CustomError = require("../helpers/customError");
 
 module.exports = {
-
-    list: async (req,res) => {
-        /*
+  list: async (req, res) => {
+    /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "List Categories"
             #swagger.description = `
@@ -22,17 +21,19 @@ module.exports = {
             </ul>
             `
         */
-       const result = await res.getModelList(Category)
+    const result = await res.getModelList(Category);
 
-       res.status(200).send({
+    res
+      .status(200)
+      .send({
         error: false,
         details: await res.getModelListDetails(Category),
-        result
-       })
-    },
+        result,
+      });
+  },
 
-    create: async (req, res) => {
-        /*
+  create: async (req, res) => {
+    /*
         #swagger.tags = ["Categories"]
         #swagger.summary = "Create Category"
         #swagger.parameters['body'] = {
@@ -42,30 +43,32 @@ module.exports = {
             }
          */
 
-        const result = await Category.create(req.body)
+    const result = await Category.create(req.body);
 
-        res.status(201).send({
-            error: false,
-            result
-        })
-    },
+    res.status(201).send({
+      error: false,
+      result,
+    });
+  },
 
-    read: async (req,res) => {
-        /*
+  read: async (req, res) => {
+    /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "Get single Category"
          */
 
-        const result = await Category.findById(req.params.id)
+    const result = await Category.findById(req.params.id);
 
-        res.status(200).send({
-            error: false,
-            result
-        })
-    },
+    if (!result) throw new CustomError('Category not found')
+        
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
 
-    update: async (req, res) => {
-        /*
+  update: async (req, res) => {
+    /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "Update Category"
             #swagger.parameters['body'] = {
@@ -75,30 +78,39 @@ module.exports = {
             }
          */
 
-        const result = await Category.findByIdAndUpdate(req.params.id,req.body,{runValidators: true,new: true})
+    const result = await Category.findByIdAndUpdate(req.params.id, req.body, {
+      runValidators: true,
+      new: true,
+    });
 
-        if (!result) throw new CustomError("Update failed, data is not found or already updated.",404)
+    if (!result)
+      throw new CustomError(
+        "Update failed, data is not found or already updated.",
+        404
+      );
 
-        res.status(202).send({
-            error: false,
-            result
-        })
-    },
+    res.status(202).send({
+      error: false,
+      result,
+    });
+  },
 
-    dlt: async (req, res) => {
-        /*
+  dlt: async (req, res) => {
+    /*
             #swagger.tags = ["Categories"]
             #swagger.summary= "Delete Single Category"
          */
 
-        const result = await Category.findByIdAndDelete(req.params.id)
+    const result = await Category.findByIdAndDelete(req.params.id);
 
-        if (!result) throw new CustomError("Delete failed, data is not found or already deleted.")
-        
-        res.status(200).send({
-            error: false,
-            result
-        })
-    }
+    if (!result)
+      throw new CustomError(
+        "Delete failed, data is not found or already deleted."
+      );
 
-}
+    res.status(200).send({
+      error: false,
+      result,
+    });
+  },
+};

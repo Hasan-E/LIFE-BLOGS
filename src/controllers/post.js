@@ -58,6 +58,8 @@ module.exports = {
 
         const result = await Post.findById(req.params.id)
 
+        if (!result) throw new CustomError('Post not found')
+
         res.status(200).send({
             error: false,
             result

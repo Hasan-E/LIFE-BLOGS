@@ -58,6 +58,8 @@ module.exports = {
 
         const result = await User.findById(req.params.id)
 
+        if (!result) throw new CustomError('User not found')
+        
         res.status(200).send({
             error: false,
             result
