@@ -3,15 +3,15 @@
 /*                LIFE BLOGS API                */
 /* ============================================ */
 
-const Post = require("../models/post")
+const User = require("../models/user")
 const CustomError = require('../helpers/customError');
 
 module.exports = {
 
     list: async (req,res) => {
         /*
-            #swagger.tags = ["Posts"]
-            #swagger.summary = "List Posts"
+            #swagger.tags = ["Users"]
+            #swagger.summary = "List Users"
             #swagger.description = `
             You can use <u> filter[] & search[] & sort[] & page & limit </u> queries with endpoint.
             <ul>
@@ -22,27 +22,27 @@ module.exports = {
             </ul>
             `
         */
-       const result = await res.getModelList(Post)
+       const result = await res.getModelList(User)
 
        res.status(200).send({
         error: false,
-        details: await res.getModelListDetails(Post),
+        details: await res.getModelListDetails(User),
         result
        })
     },
 
     create: async (req, res) => {
         /*
-        #swagger.tags = ["Posts"]
-        #swagger.summary = "Create Post"
+        #swagger.tags = ["Users"]
+        #swagger.summary = "Create User"
         #swagger.parameters['body'] = {
             in: 'body',
             required: true,
-            schema: {$ref: "#/definations/Post"}
+            schema: {$ref: "#/definations/User"}
             }
          */
 
-        const result = await Post.create(req.body)
+        const result = await User.create(req.body)
 
         res.status(201).send({
             error: false,
@@ -52,11 +52,11 @@ module.exports = {
 
     read: async (req,res) => {
         /*
-            #swagger.tags = ["Posts"]
-            #swagger.summary = "Get single Post"
+            #swagger.tags = ["Users"]
+            #swagger.summary = "Get single User"
          */
 
-        const result = await Post.findById(req.params.id)
+        const result = await User.findById(req.params.id)
 
         res.status(200).send({
             error: false,
@@ -66,16 +66,16 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["Posts"]
-            #swagger.summary = "Update Post"
+            #swagger.tags = ["Users"]
+            #swagger.summary = "Update User"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: $ref: "#definations/Post"
+                schema: $ref: "#definations/User"
             }
          */
 
-        const result = await Post.findByIdAndUpdate(req.params.id,req.body,{runValidators: true,new: true})
+        const result = await User.findByIdAndUpdate(req.params.id,req.body,{runValidators: true,new: true})
 
         if (!result) throw new CustomError("Update failed, data is not found or already updated.",404)
 
@@ -87,11 +87,11 @@ module.exports = {
 
     dlt: async (req, res) => {
         /*
-            #swagger.tags = ["Posts"]
-            #swagger.summary= "Delete Single Post"
+            #swagger.tags = ["Users"]
+            #swagger.summary= "Delete Single User"
          */
 
-        const result = await Post.findByIdAndDelete(req.params.id)
+        const result = await User.findByIdAndDelete(req.params.id)
 
         if (!result) throw new CustomError("Delete failed, data is not found or already deleted.")
         
