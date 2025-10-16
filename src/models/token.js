@@ -23,6 +23,10 @@ const tokenSchema = new Schema(
       unique: true,
       index: true,
     },
+    expiresAt: {
+      type: Date,
+      required: true
+    }
   },
   { collection: "tokens", timestamps: true }
 );
